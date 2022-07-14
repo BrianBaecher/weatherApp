@@ -8,6 +8,8 @@ let temp = document.getElementById("temp");
 let feel = document.getElementById("feel");
 let humidity = document.getElementById("humidity");
 let header = document.getElementById("header");
+
+
 let searchInput = document.getElementById("citySearch");
 let form = document.getElementById("form");
 let input = document.getElementById("citySearch");
@@ -28,7 +30,16 @@ form.addEventListener("submit", (event) => {
           "Unable to find your city, check the spelling and try again";
           cityInfo.textContent = ""
 
-      } else {
+      } else writeInfo(weatherData);
+      }
+    )
+    .catch((err) => console.error(err));
+  input.value = "";
+});
+
+
+function writeInfo(weatherData){
+    if (weatherData.cod == 200){
         console.log(weatherData);
         cityName.textContent = `${weatherData.name}`;
         currWeather.textContent = `${weatherData.weather[0].description}`;
@@ -36,7 +47,4 @@ form.addEventListener("submit", (event) => {
         feel.textContent = `${weatherData.main.feels_like}`;
         humidity.textContent = `${weatherData.main.humidity}`;
       }
-    })
-    .catch((err) => console.error(err));
-  input.value = "";
-});
+}
