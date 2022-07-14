@@ -11,6 +11,7 @@ let header = document.getElementById("header");
 let searchInput = document.getElementById("citySearch");
 let form = document.getElementById("form");
 let input = document.getElementById("citySearch");
+let cityInfo = document.getElementById("cityInfo")
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -21,9 +22,12 @@ form.addEventListener("submit", (event) => {
       return res.json();
     })
     .then((weatherData) => {
-      if (weatherData.cod == "404") {
+      if (weatherData.cod === "404" || weatherData.cod === "400") {
         console.log("ree");
-        cityName.textContent = "Unable to find your city, check the spelling and try again";
+        cityName.textContent =
+          "Unable to find your city, check the spelling and try again";
+          cityInfo.textContent = ""
+
       } else {
         console.log(weatherData);
         cityName.textContent = `${weatherData.name}`;
@@ -34,4 +38,5 @@ form.addEventListener("submit", (event) => {
       }
     })
     .catch((err) => console.error(err));
+  input.value = "";
 });
