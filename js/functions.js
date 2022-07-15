@@ -30,4 +30,63 @@ export function searchHistory(weatherData) {
   return histArr;
 }
 
+export function appendValidCity(e) {
+  let node = document.createElement("li");
+  let btn = document.createElement("button");
+  btn.id = "listButtons"
+  btn.textContent = `${e.name}`;
+  node.textContent = `${e.name}`;
+  document.getElementById("recentList").appendChild(node);
+  document.getElementById("recentList").appendChild(btn);
+  btn.addEventListener("click", (event) => {
+    console.log(event)
+    console.log(event.target.textContent)
+    buttonFetcher()
+  });
+}
 
+export function fetcher() {
+  const API = "c56add992ea90b9f5e20730ef9a5cc87";
+  const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
+  const input = document.getElementById("citySearch");
+  let search = input.value;
+  fetch(`${WEATHER_URL}?q=${search}&appid=${API}&units=imperial`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((weatherData) => {
+      if (weatherData.cod === "404" || weatherData.cod === "400") {
+        console.log("404");
+        cityName.textContent =
+          "Unable to find your city, check the spelling and try again";
+        clearInfo();
+      } else
+        writeInfo(weatherData),
+          searchHistory(weatherData),
+          appendValidCity(weatherData);
+    })
+    .catch((err) => console.error(err));
+  input.value = "";
+}
+
+export function buttonFetcher(){
+  const API = "c56add992ea90b9f5e20730ef9a5cc87";
+  const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
+  const input = document.getElementById("listButtons").textContent;
+  console.log(input)
+  let search = event.target.textContent;
+  fetch(`${WEATHER_URL}?q=${search}&appid=${API}&units=imperial`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((weatherData) => {
+      if (weatherData.cod === "404" || weatherData.cod === "400") {
+        console.log("404");
+        cityName.textContent =
+          "Unable to find your city, check the spelling and try again";
+        clearInfo();
+      } else
+        writeInfo(weatherData);
+    })
+    .catch((err) => console.error(err));
+}
