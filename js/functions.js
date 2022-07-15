@@ -31,12 +31,12 @@ export function searchHistory(weatherData) {
 }
 
 export function appendValidCity(e) {
-  let node = document.createElement("li");
+  // let node = document.createElement("li");
   let btn = document.createElement("button");
   btn.id = "listButtons"
   btn.textContent = `${e.name}`;
-  node.textContent = `${e.name}`;
-  document.getElementById("recentList").appendChild(node);
+  // node.textContent = `${e.name}`;
+  // document.getElementById("recentList").appendChild(node);
   document.getElementById("recentList").appendChild(btn);
   btn.addEventListener("click", (event) => {
     console.log(event)
